@@ -1,3 +1,5 @@
+#pragma once
+
 #include <vector>
 #include <iostream>
 
@@ -36,7 +38,7 @@ namespace Logger{
     }
 
 
-    inline void printMap(std::vector<std::vector<int>> mapArr, int row, int col, std::pair<int,int> currPos) {  
+    inline void printMap(std::vector<std::vector<int>> mapArr, int row, int col) {  
         for(int i = 0; i < row; i++) {
             for(int j = 0; j < col; j++) {
                 int tile = mapArr[i][j];
@@ -49,10 +51,6 @@ namespace Logger{
                     case 5: printColor("-", ConsoleColor::YELLOW); break; // corridor
                     case 6: printColor("@", ConsoleColor::GREEN); break; // room
                 }
-
-                // if(i == currPos.first && j == currPos.second) {
-                //     printColor("x", ConsoleColor::MAGENTA);
-                // }
             }
             std::cout << std::endl;
         }

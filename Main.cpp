@@ -16,9 +16,12 @@
 #include <iostream>
 
 int main() {
-    MapGenerator map = MapGenerator();
-    map.generateLevel(3);
-    
+    srand(time(0));
+    MapGenerator* map = new MapGenerator();
+    map->generateLevel(2);
+
+    delete map;
+
     return 0;
 }
 
