@@ -7,8 +7,10 @@
 
 #include "Utils.hpp"
 #include "DrunkardWalk.hpp"
+#include "Room.hpp"
 
-using std::cout, std::endl;
+using std::cout;
+using std::endl;
 
 class MapGenerator {
 private:
@@ -19,8 +21,6 @@ private:
     int roomAmount;
     int levelNumber;
     
-    DrunkardWalk dWalk;
-
 public:
     MapGenerator() {
         mapDimension = 11;
@@ -52,13 +52,18 @@ public:
 
     // ------------------------- LOGIC ---------------------------
 
-    void generateLevel(int levelNumber) {
-        // cout << "Generating level " << levelNumber << "..." << std::endl;
-        
+    void generateLevel(int levelNumber) {       
         setRoomAmount(levelNumber);
         this->levelNumber = levelNumber;
 
+        DrunkardWalk dWalk;
         dWalk.startDrunkardWalk(&mapArr, roomAmount, mapDimension);
+
+        for(int i = 0 ; i < roomAmount; i++) {
+            Room room;
+            PAIR_INT r = room.generateRoom();
+            cout << "Room " << i << ": {size: " << r.first << "| variant: " << r.second << "}" << endl;
+        }
     }
 
     // ------------------- UNDERLYING FUNCTIONS ------------------

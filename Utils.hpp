@@ -1,5 +1,8 @@
 #pragma once
 
+#include <vector>
+#include <string>
+
 enum class RoomTileType {
     EMPTY = 0,
     CENTER_ROOM = 1,

@@ -3,7 +3,8 @@
 #include "Utils.hpp"
 #include "Logger.hpp"
 
-using std::cout, std::endl;
+using std::cout;
+using std::endl;
 
 class DrunkardWalk {
 private:
@@ -30,7 +31,7 @@ public:
             if(attemptsRemaining <= 0) break;
 
             switch(direction) {
-                case 0: // north
+                case (int) Direction::NORTH:
                     if(currPos.y <= 1 || direction == (int) Direction::SOUTH) break;
                     else if((*mapArrPtr)[currPos.y-1][currPos.x] == (int) RoomTileType::EMPTY) {
                         if((*mapArrPtr)[currPos.y-2][currPos.x] == (int) RoomTileType::NORMAL_ROOM || (*mapArrPtr)[currPos.y-2][currPos.x] == (int) RoomTileType::CENTER_ROOM) {
@@ -53,7 +54,7 @@ public:
                     }
                     break;
 
-                case 1: // east
+                case (int) Direction::EAST:
                     if(currPos.x >= mapDimension-2 || direction == (int) Direction::WEST) break;
                     else if((*mapArrPtr)[currPos.y][currPos.x+1] == (int) RoomTileType::EMPTY) {
                         if((*mapArrPtr)[currPos.y][currPos.x+2] == (int) RoomTileType::NORMAL_ROOM || (*mapArrPtr)[currPos.y][currPos.x+2] == (int) RoomTileType::CENTER_ROOM) {
@@ -76,7 +77,7 @@ public:
                     }
                     break;
 
-                case 2: // south
+                case (int) Direction::SOUTH:
                     if(currPos.y >= mapDimension-2 || direction == (int) Direction::NORTH) break;
                     else if((*mapArrPtr)[currPos.y+1][currPos.x] == (int) RoomTileType::EMPTY) {
                         if((*mapArrPtr)[currPos.y+2][currPos.x] == (int) RoomTileType::NORMAL_ROOM || (*mapArrPtr)[currPos.y+2][currPos.x] == (int) RoomTileType::CENTER_ROOM) {
@@ -99,7 +100,7 @@ public:
                     }
                     break;
 
-                case 3: // west
+                case (int) Direction::WEST:
                     if(currPos.x <= 1 || direction == (int) Direction::EAST) break;
                     else if((*mapArrPtr)[currPos.y][currPos.x-1] == (int) RoomTileType::EMPTY) {
                         if((*mapArrPtr)[currPos.y][currPos.x-2] == (int) RoomTileType::NORMAL_ROOM || (*mapArrPtr)[currPos.y][currPos.x-2] == (int) RoomTileType::CENTER_ROOM) {
