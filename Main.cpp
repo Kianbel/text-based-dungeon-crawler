@@ -18,7 +18,7 @@
 int main() {
     srand(time(0));
     MapGenerator* map = new MapGenerator();
-    map->generateLevel(2);
+    map->generateLevel(1);
 
     delete map;
 

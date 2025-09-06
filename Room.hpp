@@ -43,6 +43,7 @@ private:
             case 2:
                 return (int) RoomSize::Large;
         }
+        return -1;
     }
 
     int pickRandomRoomVariant(int roomSize) {
@@ -60,5 +61,6 @@ private:
                 return (rand() % lr.getVariantsAmount());
             }
         }
+        return -1;
     }
 };
