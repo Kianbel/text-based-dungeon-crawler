@@ -15,12 +15,22 @@
 #include "Map.hpp"
 #include <iostream>
 
+bool gameRunning = 0;
+
 int main() {
     srand(time(0)); // initialize randomness
 
     Map map;
     map.generateLevel(1);
 
+    while(gameRunning) {
+        gameLoop();
+    }
+
     return 0;
+}
+
+void gameLoop() {
+    
 }
 
