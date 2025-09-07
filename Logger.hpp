@@ -38,10 +38,10 @@ namespace Logger{
     }
 
 
-    inline void printMap(std::vector<std::vector<int>> mapArr, int row, int col) {  
+    inline void printMap(std::vector<std::vector<int>> mapData, int row, int col) {  
         for(int i = 0; i < row; i++) {
             for(int j = 0; j < col; j++) {
-                int tile = mapArr[i][j];
+                int tile = mapData[i][j];
                 switch(tile) {
                     case 0: printColor(" ", ConsoleColor::WHITE); break; // empty
                     case 1: printColor("@", ConsoleColor::RED); break; // central room

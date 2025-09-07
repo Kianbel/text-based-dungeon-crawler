@@ -6,49 +6,37 @@
 #include <ctime>
 
 #include "Utils.hpp"
+#include "ProbabilityUtils.hpp"
 #include "DrunkardWalk.hpp"
 #include "Room.hpp"
 
-using std::cout;
-using std::endl;
-
-class MapGenerator {
+class Map {
 private:
     int mapDimension;
-    VECTOR2D mapArr;
+    VECTOR2D mapData;
     Coords centerRoom;
 
     int roomAmount;
     int levelNumber;
     
 public:
-    MapGenerator() {
+    Map() {
         mapDimension = 11;
         centerRoom = {mapDimension / 2, mapDimension / 2};
 
         // initialize the map
-        mapArr = VECTOR2D(mapDimension, std::vector<int>(mapDimension, 0));
-        mapArr[centerRoom.x][centerRoom.y] = (int) RoomTileType::CENTER_ROOM;
+        mapData = VECTOR2D(mapDimension, std::vector<int>(mapDimension, 0));
+        mapData[centerRoom.x][centerRoom.y] = (int) RoomTileType::CENTER_ROOM;
     }
 
-    MapGenerator(int mapDimension) {
+    Map(int mapDimension) {
         this->mapDimension = mapDimension;
         centerRoom = {mapDimension / 2, mapDimension / 2};
 
         // initialize the map
-        mapArr = VECTOR2D(mapDimension, std::vector<int>(mapDimension, 0));
-        mapArr[centerRoom.x][centerRoom.y] = (int) RoomTileType::CENTER_ROOM;
+        mapData = VECTOR2D(mapDimension, std::vector<int>(mapDimension, 0));
+        mapData[centerRoom.x][centerRoom.y] = (int) RoomTileType::CENTER_ROOM;
     }
-
-    // -------------------- SETTERS / GETTERS -------------------- 
-
-    VECTOR2D* getMapArrPtr() {return &mapArr;}
-
-    int getMapDimension() {return mapDimension;}
-
-    int getRoomAmount() {return roomAmount;}
-
-    void setRoom(int row, int col, RoomTileType type) {mapArr[row][col] = (int) type;}
 
     // ------------------------- LOGIC ---------------------------
 
@@ -57,28 +45,39 @@ public:
         this->levelNumber = levelNumber;
 
         DrunkardWalk dWalk;
-        dWalk.startDrunkardWalk(&mapArr, roomAmount, mapDimension);
+        dWalk.startDrunkardWalk(mapData, roomAmount, mapDimension);
 
+        // =========== TEMPORARY =======================
         for(int i = 0 ; i < roomAmount; i++) {
             Room room;
             PAIR_INT r = room.generateRoom();
-            cout << "Room " << i << ": {size: " << r.first << "| variant: " << r.second << "}" << endl;
+            std::cout << "Room " << i << ": {size: " << r.first << "| variant: " << r.second << "} \n";
         }
     }
 
+    // -------------------- SETTERS / GETTERS -------------------- 
+
+    VECTOR2D getMapData() {return mapData;}
+
+    int getMapDimension() {return mapDimension;}
+
+    int getRoomAmount() {return roomAmount;}
+
+    void setRoom(int row, int col, RoomTileType type) {mapData[row][col] = (int) type;}
+
     // ------------------- UNDERLYING FUNCTIONS ------------------
 
-protected:
+private:
     void setRoomAmount(int levelNumber) {
         switch(levelNumber) {
             case 1:
-                roomAmount = 5 + rand() % 4; // level 1: 5-8 rooms
+                roomAmount = rollRandomizedRange(5, 8);
                 break;
             case 2:
-                roomAmount = 8 + rand() % 8; // level 2: 8-15 rooms
+                roomAmount = rollRandomizedRange(8, 12);
                 break;
             case 3:
-                roomAmount = 15 + rand() % 8; // level 3: 15-22 rooms
+                roomAmount = rollRandomizedRange(12, 22);
                 break;
             default:
                 std::cout << "(var:levelNumber) INVALID INPUT: " << levelNumber << std::endl;

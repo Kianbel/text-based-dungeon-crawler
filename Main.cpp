@@ -12,15 +12,14 @@
                 > the deeper the level, the harder
 */
 
-#include "MapGenerator.hpp"
+#include "Map.hpp"
 #include <iostream>
 
 int main() {
-    srand(time(0));
-    MapGenerator* map = new MapGenerator();
-    map->generateLevel(1);
+    srand(time(0)); // initialize randomness
 
-    delete map;
+    Map map;
+    map.generateLevel(1);
 
     return 0;
 }
