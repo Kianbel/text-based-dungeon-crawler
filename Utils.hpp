@@ -6,11 +6,9 @@
 enum class RoomTileType {
     EMPTY = 0,
     CENTER_ROOM = 1,
-    NORTH_CORRIDOR = 2,
-    EAST_CORRIDOR = 3,
-    SOUTH_CORRIDOR = 4,
-    WEST_CORRIDOR = 5,
-    NORMAL_ROOM = 6
+    VERTICAL_CORRIDOR = 2,
+    HORIZONTAL_CORRIDOR = 3,
+    NORMAL_ROOM = 4
 };
 
 typedef struct {

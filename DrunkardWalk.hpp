@@ -31,13 +31,13 @@ public:
                     if(currPos.y <= 1 || direction == (int) Direction::SOUTH) break;
                     else if(mapData[currPos.y-1][currPos.x] == (int) RoomTileType::EMPTY) {
                         if(mapData[currPos.y-2][currPos.x] == (int) RoomTileType::NORMAL_ROOM || mapData[currPos.y-2][currPos.x] == (int) RoomTileType::CENTER_ROOM) {
-                            setRoom(currPos.y-1, currPos.x, RoomTileType::NORTH_CORRIDOR, mapData);
+                            setRoom(currPos.y-1, currPos.x, RoomTileType::VERTICAL_CORRIDOR, mapData);
                             moveCurrPos(Direction::NORTH, currPos);
                             prevDirection = Direction::SOUTH;
                             attemptsRemaining--;
                         }
                         else {
-                            setRoom(currPos.y-1, currPos.x, RoomTileType::NORTH_CORRIDOR, mapData);
+                            setRoom(currPos.y-1, currPos.x, RoomTileType::VERTICAL_CORRIDOR, mapData);
                             setRoom(currPos.y-2, currPos.x, RoomTileType::NORMAL_ROOM, mapData);
                             moveCurrPos(Direction::NORTH, currPos);
                             prevDirection = Direction::SOUTH;
@@ -54,13 +54,13 @@ public:
                     if(currPos.x >= mapDimension-2 || direction == (int) Direction::WEST) break;
                     else if(mapData[currPos.y][currPos.x+1] == (int) RoomTileType::EMPTY) {
                         if(mapData[currPos.y][currPos.x+2] == (int) RoomTileType::NORMAL_ROOM || mapData[currPos.y][currPos.x+2] == (int) RoomTileType::CENTER_ROOM) {
-                            setRoom(currPos.y, currPos.x+1, RoomTileType::EAST_CORRIDOR, mapData);
+                            setRoom(currPos.y, currPos.x+1, RoomTileType::HORIZONTAL_CORRIDOR, mapData);
                             moveCurrPos(Direction::EAST, currPos);
                             prevDirection = Direction::WEST;
                             attemptsRemaining--;
                         }
                         else {
-                            setRoom(currPos.y, currPos.x+1, RoomTileType::EAST_CORRIDOR, mapData);
+                            setRoom(currPos.y, currPos.x+1, RoomTileType::HORIZONTAL_CORRIDOR, mapData);
                             setRoom(currPos.y, currPos.x+2, RoomTileType::NORMAL_ROOM, mapData);
                             moveCurrPos(Direction::EAST, currPos);
                             prevDirection = Direction::WEST;
@@ -77,13 +77,13 @@ public:
                     if(currPos.y >= mapDimension-2 || direction == (int) Direction::NORTH) break;
                     else if(mapData[currPos.y+1][currPos.x] == (int) RoomTileType::EMPTY) {
                         if(mapData[currPos.y+2][currPos.x] == (int) RoomTileType::NORMAL_ROOM || mapData[currPos.y+2][currPos.x] == (int) RoomTileType::CENTER_ROOM) {
-                            setRoom(currPos.y+1, currPos.x, RoomTileType::SOUTH_CORRIDOR, mapData);
+                            setRoom(currPos.y+1, currPos.x, RoomTileType::VERTICAL_CORRIDOR, mapData);
                             moveCurrPos(Direction::SOUTH, currPos);
                             prevDirection = Direction::NORTH;
                             attemptsRemaining--;
                         }
                         else {
-                            setRoom(currPos.y+1, currPos.x, RoomTileType::SOUTH_CORRIDOR, mapData);
+                            setRoom(currPos.y+1, currPos.x, RoomTileType::VERTICAL_CORRIDOR, mapData);
                             setRoom(currPos.y+2, currPos.x, RoomTileType::NORMAL_ROOM, mapData);
                             moveCurrPos(Direction::SOUTH, currPos);
                             prevDirection = Direction::NORTH;
@@ -100,13 +100,13 @@ public:
                     if(currPos.x <= 1 || direction == (int) Direction::EAST) break;
                     else if(mapData[currPos.y][currPos.x-1] == (int) RoomTileType::EMPTY) {
                         if(mapData[currPos.y][currPos.x-2] == (int) RoomTileType::NORMAL_ROOM || mapData[currPos.y][currPos.x-2] == (int) RoomTileType::CENTER_ROOM) {
-                            setRoom(currPos.y, currPos.x-1, RoomTileType::WEST_CORRIDOR, mapData);
+                            setRoom(currPos.y, currPos.x-1, RoomTileType::HORIZONTAL_CORRIDOR, mapData);
                             moveCurrPos(Direction::WEST, currPos);
                             prevDirection = Direction::EAST;
                             attemptsRemaining--;
                         }
                         else {  
-                            setRoom(currPos.y, currPos.x-1, RoomTileType::WEST_CORRIDOR, mapData);
+                            setRoom(currPos.y, currPos.x-1, RoomTileType::HORIZONTAL_CORRIDOR, mapData);
                             setRoom(currPos.y, currPos.x-2, RoomTileType::NORMAL_ROOM, mapData);
                             moveCurrPos(Direction::WEST, currPos);
                             prevDirection = Direction::EAST;
@@ -121,7 +121,7 @@ public:
             }
         }
     
-        Logger::printMap(mapData, mapDimension, mapDimension);
+        // Logger::printMap(mapData, mapDimension, mapDimension);
     }
     
 private:

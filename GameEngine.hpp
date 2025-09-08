@@ -23,6 +23,8 @@ public:
     }
 
     void start() {
+        playerPosition = player->getPosition();
+        Logger::printMap(mapData, mapDimension, mapDimension, playerPosition);
         while(running) {
             player->move(chooseMovementDirection());
             playerPosition = player->getPosition();
@@ -33,7 +35,7 @@ public:
 private:
     void intialize() {
         map = new Map();
-        map->generateLevel(1);
+        map->generateLevel(3);
         mapData = map->getMapData();
         mapDimension = map->getMapDimension();
 
@@ -43,17 +45,17 @@ private:
     Direction chooseMovementDirection() {
         char c;
         while(true) {
-            std::cout << "\nWhich direction do you want to go? (n/s/e/w): ";
+            std::cout << "\nWhich direction do you want to go? (w/a/s/d): ";
             std::cin >> c;
             c = tolower(c);
             switch(c) {
-                case 'n':
+                case 'w':
                     return Direction::NORTH;
                 case 's':
                     return Direction::SOUTH;
-                case 'e':
+                case 'd':
                     return Direction::EAST;
-                case 'w':
+                case 'a':
                     return Direction::WEST;
                 default:
                     std::cout << "\nInvalid direction";

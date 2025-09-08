@@ -50,9 +50,7 @@ namespace Logger{
                     case 1: printColor("@", ConsoleColor::RED); break; // central room
                     case 2: printColor("|", ConsoleColor::YELLOW); break; // corridor
                     case 3: printColor("-", ConsoleColor::YELLOW); break; // corridor
-                    case 4: printColor("|", ConsoleColor::YELLOW); break; // corridor
-                    case 5: printColor("-", ConsoleColor::YELLOW); break; // corridor
-                    case 6: printColor("@", ConsoleColor::GREEN); break; // room
+                    case 4: printColor("@", ConsoleColor::GREEN); break; // room
                 }
             }
             std::cout << std::endl;
@@ -68,9 +66,7 @@ namespace Logger{
                     case 1: printColor("@", ConsoleColor::RED); break; // central room
                     case 2: printColor("|", ConsoleColor::YELLOW); break; // corridor
                     case 3: printColor("-", ConsoleColor::YELLOW); break; // corridor
-                    case 4: printColor("|", ConsoleColor::YELLOW); break; // corridor
-                    case 5: printColor("-", ConsoleColor::YELLOW); break; // corridor
-                    case 6: printColor("@", ConsoleColor::GREEN); break; // room
+                    case 4: printColor("@", ConsoleColor::GREEN); break; // room
                 }
             }
             std::cout << std::endl;
