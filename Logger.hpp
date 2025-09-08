@@ -38,7 +38,28 @@ namespace Logger{
     }
 
 
-    inline void printMap(std::vector<std::vector<int>> mapData, int row, int col) {  
+    inline void printMap(std::vector<std::vector<int>>& mapData, int& row, int& col, Coords& coords) {  
+        for(int i = 0; i < row; i++) {
+            for(int j = 0; j < col; j++) {
+                if(coords.y == i && coords.x == j) {
+                    printColor("x", ConsoleColor::MAGENTA); continue;
+                }
+                int tile = mapData[i][j];
+                switch(tile) {
+                    case 0: printColor(" ", ConsoleColor::WHITE); break; // empty
+                    case 1: printColor("@", ConsoleColor::RED); break; // central room
+                    case 2: printColor("|", ConsoleColor::YELLOW); break; // corridor
+                    case 3: printColor("-", ConsoleColor::YELLOW); break; // corridor
+                    case 4: printColor("|", ConsoleColor::YELLOW); break; // corridor
+                    case 5: printColor("-", ConsoleColor::YELLOW); break; // corridor
+                    case 6: printColor("@", ConsoleColor::GREEN); break; // room
+                }
+            }
+            std::cout << std::endl;
+        }
+    
+    }
+    inline void printMap(std::vector<std::vector<int>>& mapData, int& row, int& col) {  
         for(int i = 0; i < row; i++) {
             for(int j = 0; j < col; j++) {
                 int tile = mapData[i][j];

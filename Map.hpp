@@ -9,6 +9,7 @@
 #include "ProbabilityUtils.hpp"
 #include "DrunkardWalk.hpp"
 #include "Room.hpp"
+#include "Logger.hpp"
 
 class Map {
 private:
@@ -46,13 +47,10 @@ public:
 
         DrunkardWalk dWalk;
         dWalk.startDrunkardWalk(mapData, roomAmount, mapDimension);
+    }
 
-        // =========== TEMPORARY =======================
-        for(int i = 0 ; i < roomAmount; i++) {
-            Room room;
-            PAIR_INT r = room.generateRoom();
-            std::cout << "Room " << i << ": {size: " << r.first << "| variant: " << r.second << "} \n";
-        }
+    void printMap() {
+        Logger::printMap(mapData, mapDimension, mapDimension);
     }
 
     // -------------------- SETTERS / GETTERS -------------------- 

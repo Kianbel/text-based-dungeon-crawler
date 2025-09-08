@@ -12,14 +12,14 @@
                 > the deeper the level, the harder
 */
 
-#include "Map.hpp"
+#include "GameEngine.hpp"
 #include <iostream>
 
 int main() {
     srand(time(0)); // initialize randomness
 
-    Map map;
-    map.generateLevel(1);
+    GameEngine gameEngine;
+    gameEngine.start();
 
     return 0;
 }
