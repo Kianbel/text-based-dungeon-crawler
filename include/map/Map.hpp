@@ -11,11 +11,18 @@
 #include "DrunkardWalk.hpp"
 #include "Room.hpp"
 
+struct RoomDetails {
+    Coords coords;
+    VECTOR2D layout;
+};
+
+
 class Map {
 private:
     int mapDimension;
     VECTOR2D mapData;
     Coords centerRoom;
+    std::vector<RoomDetails> rooms;
 
     int roomAmount;
     int levelNumber;
@@ -47,11 +54,15 @@ public:
 
         DrunkardWalk dWalk;
         dWalk.startDrunkardWalk(mapData, roomAmount, mapDimension);
+
+        generateRooms();
+        
     }
 
     void printMap() {
         Logger::printMap(mapData, mapDimension, mapDimension);
     }
+
 
     // -------------------- SETTERS / GETTERS -------------------- 
 
@@ -66,6 +77,26 @@ public:
     // ------------------- UNDERLYING FUNCTIONS ------------------
 
 private:
+    void generateRooms() {        
+        for(int i = 0; i < mapDimension; i++) {
+            for(int j = 0; j < mapDimension; j++) {
+                if(mapData[i][j] == (int) RoomTileType::CENTER_ROOM || mapData[i][j] == (int) RoomTileType::NORMAL_ROOM) {
+                    Room room;
+                    
+                    RoomDetails r;
+                    r.coords = {j, i};
+                    r.layout = room.getRoomData();
+
+                    rooms.push_back(r);
+                }
+            }
+        }
+
+        // for(auto& r : rooms) {
+        //     std::cout << "x=" << r.coords.x << ", y=" << r.coords.y << "\n";
+        // }
+    }
+
     void setRoomAmount(int levelNumber) {
         switch(levelNumber) {
             case 1:

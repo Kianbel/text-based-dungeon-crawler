@@ -11,10 +11,10 @@ enum class RoomTileType {
     NORMAL_ROOM = 4
 };
 
-typedef struct {
+struct Coords {
     int x;
     int y;
-} Coords;
+};
 
 enum class Direction {
     NORTH,

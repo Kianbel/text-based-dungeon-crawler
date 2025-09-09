@@ -13,26 +13,45 @@ enum class RoomSize {
     Large = 2,
 };
 
-typedef struct {
-    int size;
-    int variant;
-} room;
-
 class Room {
 private:
-    room r;
+    int size;
+    int variant;
+    VECTOR2D roomData;
 
 public:
     Room() {
-        r.size = pickRandomRoomSize();
-        r.variant = pickRandomRoomVariant(r.size);
+        size = pickRandomRoomSize();
+        variant = pickRandomRoomVariant(size);
+        roomData = generate(size, variant);
     }
 
-    PAIR_INT generateRoom() {
-        return PAIR_INT(r.size, r.variant);
+    VECTOR2D getRoomData() {
+        return roomData;
     }
+
 
 private:
+    VECTOR2D generate(int size, int variant) {
+        switch(size) {
+            case (int) RoomSize::Small: {
+                SmallRoom sr;
+                return sr.getVariantData(variant);
+            }
+            case (int) RoomSize::Medium: {
+                MediumRoom mr;
+                return mr.getVariantData(variant);
+            }
+            case (int) RoomSize::Large:{
+                LargeRoom lr;
+                return lr.getVariantData(variant);
+            }
+        }
+        SmallRoom sr;
+        return sr.getVariantData(variant);
+    }
+
+
     int pickRandomRoomSize() {
         int chooseSize = rand() % 3;
         switch(chooseSize) {
@@ -46,8 +65,8 @@ private:
         return -1;
     }
 
-    int pickRandomRoomVariant(int roomSize) {
-        switch(roomSize) {
+    int pickRandomRoomVariant(int size) {
+        switch(size) {
             case (int) RoomSize::Small: {
                 SmallRoom sr;
                 return (rand() %  sr.getVariantsAmount());
