@@ -10,12 +10,14 @@
 class GameEngine {
 private:
     Map* map;
-    int mapDimension;
-    Player* player;
-    Coords playerPosition;
     VECTOR2D mapData;
+    int mapDimension;
 
-    bool running = true;
+    Player* player;
+    Coords playerMapPosition;
+
+    bool isRunning = true;
+    bool hasPlayerMovedRoom = false;
 
 public:
     GameEngine() {
@@ -28,15 +30,18 @@ public:
     }
 
     void start() {
-        playerPosition = player->getPosition();
-        Logger::printMap(mapData, mapDimension, mapDimension, playerPosition);
+        playerMapPosition = player->getMapPosition();
+        Logger::printMap(mapData, mapDimension, mapDimension, playerMapPosition);
 
         // ========== GAME LOOP ==========
-        while(running)
+        while(isRunning)
         {
-            player->move(chooseMovementDirection());
-            playerPosition = player->getPosition();
-            Logger::printMap(mapData, mapDimension, mapDimension, playerPosition);
+            if(!hasPlayerMovedRoom) {
+
+            }
+            else {
+                movePlayerOnMap();
+            }
         }
         // ========== END GAME LOOP ==========
 
@@ -52,7 +57,13 @@ private:
         player = new Player(mapData, mapDimension);
     }
 
-    Direction chooseMovementDirection() {
+    void movePlayerOnMap() {
+        player->moveOnMap(chooseMovementDirection()); // REFACTOR
+        playerMapPosition = player->getMapPosition();
+        Logger::printMap(mapData, mapDimension, mapDimension, playerMapPosition);
+    }
+
+    Direction chooseMovementDirection() { // REFACTOR SINCE THIS IS MAP MOVEMENT, NOT ROOM MOVEMENT
         char c;
         while(true) {
             std::cout << "\nWhich direction do you want to go? (w/a/s/d): ";
