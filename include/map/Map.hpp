@@ -5,11 +5,11 @@
 #include <cstdlib>
 #include <ctime>
 
-#include "Utils.hpp"
-#include "ProbabilityUtils.hpp"
+#include "../utils/Utils.hpp"
+#include "../utils/ProbabilityUtils.hpp"
+#include "../utils/Logger.hpp"
 #include "DrunkardWalk.hpp"
 #include "Room.hpp"
-#include "Logger.hpp"
 
 class Map {
 private:

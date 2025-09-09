@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include <iostream>
 
-#include "Utils.hpp"
+#include "../utils/Utils.hpp"
 #include "RoomLayouts.hpp"
 
 enum class RoomSize {

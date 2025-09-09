@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Map.hpp"
-#include "Player.hpp"
-#include "Utils.hpp"
-#include "Logger.hpp"
+#include "../map/Map.hpp"
+#include "../entities/Player.hpp"
+#include "../utils/Utils.hpp"
+#include "../utils/Logger.hpp"
 
 #include <cstdlib>
 
@@ -22,14 +22,24 @@ public:
         intialize();
     }
 
+    ~GameEngine() {
+        delete map;
+        delete player;
+    }
+
     void start() {
         playerPosition = player->getPosition();
         Logger::printMap(mapData, mapDimension, mapDimension, playerPosition);
-        while(running) {
+
+        // ========== GAME LOOP ==========
+        while(running)
+        {
             player->move(chooseMovementDirection());
             playerPosition = player->getPosition();
             Logger::printMap(mapData, mapDimension, mapDimension, playerPosition);
         }
+        // ========== END GAME LOOP ==========
+
     }
 
 private:

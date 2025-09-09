@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Utils.hpp"
-#include "Logger.hpp"
-#include "ProbabilityUtils.hpp"
+#include "../utils/Utils.hpp"
+#include "../utils/Logger.hpp"
+#include "../utils/ProbabilityUtils.hpp"
 
 class DrunkardWalk {
 private:

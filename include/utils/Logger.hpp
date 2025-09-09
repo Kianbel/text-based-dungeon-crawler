@@ -3,8 +3,6 @@
 #include <vector>
 #include <iostream>
 
-#pragma once
-
 enum class ConsoleColor {
     DEFAULT,
     RED,

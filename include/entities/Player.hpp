@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Map.hpp"
-#include "Utils.hpp"
+#include "../map/Map.hpp"
+#include "../utils/Utils.hpp"
 
 class Player {
 private:

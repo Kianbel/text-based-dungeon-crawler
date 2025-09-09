@@ -12,7 +12,7 @@
                 > the deeper the level, the harder
 */
 
-#include "GameEngine.hpp"
+#include "../include/core/GameEngine.hpp"
 #include <iostream>
 
 int main() {
@@ -23,4 +23,3 @@ int main() {
 
     return 0;
 }
-
