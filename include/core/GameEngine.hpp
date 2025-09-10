@@ -17,7 +17,7 @@ private:
     Coords playerMapPosition;
 
     bool isRunning = true;
-    bool hasPlayerMovedRoom = false;
+    bool hasPlayerMovedRoom = true;
 
 public:
     GameEngine() {
@@ -30,17 +30,21 @@ public:
     }
 
     void start() {
+        // INITIALIZATIONS
         playerMapPosition = player->getMapPosition();
-        Logger::printMap(mapData, mapDimension, mapDimension, playerMapPosition);
+
 
         // ========== GAME LOOP ==========
         while(isRunning)
         {
-            if(!hasPlayerMovedRoom) {
+            clearConsole();
+            showChoiceOptions();
 
+            if(!hasPlayerMovedRoom) {
+                
             }
             else {
-                movePlayerOnMap();
+                
             }
         }
         // ========== END GAME LOOP ==========
@@ -57,30 +61,63 @@ private:
         player = new Player(mapData, mapDimension);
     }
 
-    void movePlayerOnMap() {
-        player->moveOnMap(chooseMovementDirection()); // REFACTOR
+    void showChoiceOptions() {
+        while(true) {
+            std::cout <<    "======================================\n";
+            std::cout <<    "[w]   Walk north\n";
+            std::cout <<    "[s]   Walk south\n";
+            std::cout <<    "[a]   Walk west\n";
+            std::cout <<    "[d]   Walk east\n";
+            std::cout <<    "[e]   Interact\n";
+            std::cout <<    "\n";
+            std::cout <<    "[m]   Open map\n";
+            std::cout <<    "[1]   Open menu\n";
+
+            char choice;
+            std::cin >> choice;
+            clearConsole();
+
+            switch(choice) {
+                case 'w':
+                    break;
+                case 's':
+                    break;
+                case 'a':
+                    break;
+                case 'd':
+                    break;
+                case 'e': // IMPLEMENT
+                    std::cout << "interacted\n";
+                    break;
+                case 'm': // IMPLEMENT
+
+                    printMap();
+                    std::cout << "map opened\n";
+                    break;
+                case '1': // IMPLEMENT
+                    std::cout << "menu opened\n";
+                    break;
+                default:
+                    std::cout << "Invalid choice [" << choice << "], try again.\n";
+                    break;
+            }
+        }
+    }
+
+    void movePlayerOnMap(Direction d) { // NOTE: CALL THIS WHEN PLAYER MOVES TO ANOTHER ROOM
+        player->moveOnMap(d);
         playerMapPosition = player->getMapPosition();
+    }
+
+    // ==================== HELPER FUNCTIONS ====================
+
+    void printMap() {
         Logger::printMap(mapData, mapDimension, mapDimension, playerMapPosition);
     }
 
-    Direction chooseMovementDirection() { // REFACTOR SINCE THIS IS MAP MOVEMENT, NOT ROOM MOVEMENT
-        char c;
-        while(true) {
-            std::cout << "\nWhich direction do you want to go? (w/a/s/d): ";
-            std::cin >> c;
-            c = tolower(c);
-            switch(c) {
-                case 'w':
-                    return Direction::NORTH;
-                case 's':
-                    return Direction::SOUTH;
-                case 'd':
-                    return Direction::EAST;
-                case 'a':
-                    return Direction::WEST;
-                default:
-                    std::cout << "\nInvalid direction";
-            }
+    void clearConsole() {
+        for(int i = 0; i < 30; i++) {
+            std::cout << '\n';
         }
     }
 };
