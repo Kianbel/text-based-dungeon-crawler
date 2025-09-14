@@ -17,11 +17,12 @@ private:
     Coords playerMapPosition;
 
     bool isRunning = true;
-    bool hasPlayerMovedRoom = true;
+    bool hasPlayerMovedRoom = false;
+    bool isMapOpened = false;
 
 public:
     GameEngine() {
-        intialize();
+        initialize();
     }
 
     ~GameEngine() {
@@ -32,27 +33,29 @@ public:
     void start() {
         // INITIALIZATIONS
         playerMapPosition = player->getMapPosition();
+        
 
 
         // ========== GAME LOOP ==========
-        while(isRunning)
-        {
+        while(isRunning) {         
             clearConsole();
-            showChoiceOptions();
 
             if(!hasPlayerMovedRoom) {
-                
+                // PRINT MAP OR CURRENT ROOM
+                if(!isMapOpened) printCurrentRoom();
+                else {printMap(); isMapOpened = false;}
             }
             else {
                 
             }
+
+            showChoiceOptions();
         }
         // ========== END GAME LOOP ==========
 
     }
-
 private:
-    void intialize() {
+    void initialize() {
         map = new Map();
         map->generateLevel(3);
         mapData = map->getMapData();
@@ -75,30 +78,38 @@ private:
 
             char choice;
             std::cin >> choice;
-            clearConsole();
+
+            // if(!isMapOpened) clearConsole();
 
             switch(choice) {
                 case 'w':
+                    return;
                     break;
                 case 's':
+                    return;
                     break;
                 case 'a':
+                    return;
                     break;
                 case 'd':
+                    return;
                     break;
                 case 'e': // IMPLEMENT
                     std::cout << "interacted\n";
+                    return;
                     break;
                 case 'm': // IMPLEMENT
-
+                    isMapOpened = true;
                     printMap();
-                    std::cout << "map opened\n";
+                    return;
                     break;
                 case '1': // IMPLEMENT
                     std::cout << "menu opened\n";
+                    return;
                     break;
                 default:
                     std::cout << "Invalid choice [" << choice << "], try again.\n";
+                    return;
                     break;
             }
         }
@@ -108,6 +119,46 @@ private:
         player->moveOnMap(d);
         playerMapPosition = player->getMapPosition();
     }
+
+    // ==================== ROOM LOGIC ====================
+
+    void printCurrentRoom() {
+        VECTOR2D currentRoom = map->getCurrentRoom(playerMapPosition);
+        srand(0);
+
+        for(int i = 0; i < currentRoom.size(); i++) {
+            for(int j = 0; j < currentRoom.size(); j++) {
+                RoomTile tile = (RoomTile) currentRoom[i][j];
+                int r = rollRandomizedRange(1,100);
+                switch(tile) {
+                    case RoomTile::EMPTY:
+                        std::cout << " ";
+                        break;
+                    
+                    case RoomTile::FLOOR:
+                        if(r <= 85) {std::cout << " ";}
+                        else {
+                            r = rollRandomizedRange(1,2);
+                            if(r == 1) std::cout << ".";
+                            else std::cout << "_";
+                        }
+                        break;
+
+                    case RoomTile::WALL:
+                        std::cout << (char) 178; // ▓
+                        break;
+
+                    case RoomTile::DOOR:
+                        std::cout << "+";
+                        break;
+                }
+            }
+            std::cout << "\n";
+        }
+    }
+
+    
+
 
     // ==================== HELPER FUNCTIONS ====================
 

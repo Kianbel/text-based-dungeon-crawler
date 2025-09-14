@@ -3,12 +3,19 @@
 #include <vector>
 #include <string>
 
-enum class RoomTileType {
+enum class MapTile {
     EMPTY = 0,
     CENTER_ROOM = 1,
     VERTICAL_CORRIDOR = 2,
     HORIZONTAL_CORRIDOR = 3,
     NORMAL_ROOM = 4
+};
+
+enum class RoomTile {
+    EMPTY = -1,
+    FLOOR = 0,
+    WALL = 1,
+    DOOR = 2,
 };
 
 struct Coords {

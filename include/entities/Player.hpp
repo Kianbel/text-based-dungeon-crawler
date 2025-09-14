@@ -25,7 +25,7 @@ public:
 
         switch((int) direction) {
             case (int) Direction::NORTH:
-                if(mapData[mapPosition.y-1][mapPosition.x] == (int) RoomTileType::VERTICAL_CORRIDOR) {
+                if(mapData[mapPosition.y-1][mapPosition.x] == (int) MapTile::VERTICAL_CORRIDOR) {
                     mapPosition.y -= 2;
                 }
                 else {
@@ -33,7 +33,7 @@ public:
                 }
                 break;
             case (int) Direction::EAST:
-                if(mapData[mapPosition.y][mapPosition.x+1] == (int) RoomTileType::HORIZONTAL_CORRIDOR) {
+                if(mapData[mapPosition.y][mapPosition.x+1] == (int) MapTile::HORIZONTAL_CORRIDOR) {
                     mapPosition.x += 2;
                 }
                 else {
@@ -41,7 +41,7 @@ public:
                 }
                 break;
             case (int) Direction::SOUTH:
-                if(mapData[mapPosition.y+1][mapPosition.x] == (int) RoomTileType::VERTICAL_CORRIDOR) {
+                if(mapData[mapPosition.y+1][mapPosition.x] == (int) MapTile::VERTICAL_CORRIDOR) {
                     mapPosition.y += 2;
                 }
                 else {
@@ -49,7 +49,7 @@ public:
                 }
                 break;
             case (int) Direction::WEST:
-                if(mapData[mapPosition.y][mapPosition.x-1] == (int) RoomTileType::HORIZONTAL_CORRIDOR) {
+                if(mapData[mapPosition.y][mapPosition.x-1] == (int) MapTile::HORIZONTAL_CORRIDOR) {
                     mapPosition.x -= 2;
                 }
                 else {

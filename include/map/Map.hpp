@@ -12,8 +12,9 @@
 #include "Room.hpp"
 
 struct RoomDetails {
-    Coords coords;
-    VECTOR2D layout;
+    Coords roomCoords;
+    Coords playerCoords;
+    VECTOR2D roomLayout;
 };
 
 
@@ -34,7 +35,7 @@ public:
 
         // initialize the map
         mapData = VECTOR2D(mapDimension, std::vector<int>(mapDimension, 0));
-        mapData[centerRoom.x][centerRoom.y] = (int) RoomTileType::CENTER_ROOM;
+        mapData[centerRoom.x][centerRoom.y] = (int) MapTile::CENTER_ROOM;
     }
 
     Map(int mapDimension) {
@@ -43,10 +44,10 @@ public:
 
         // initialize the map
         mapData = VECTOR2D(mapDimension, std::vector<int>(mapDimension, 0));
-        mapData[centerRoom.x][centerRoom.y] = (int) RoomTileType::CENTER_ROOM;
+        mapData[centerRoom.x][centerRoom.y] = (int) MapTile::CENTER_ROOM;
     }
 
-    // ------------------------- LOGIC ---------------------------
+    // ------------------------- MAP LOGIC ---------------------------
 
     void generateLevel(int levelNumber) {       
         setRoomAmount(levelNumber);
@@ -72,7 +73,16 @@ public:
 
     int getRoomAmount() {return roomAmount;}
 
-    void setRoom(int row, int col, RoomTileType type) {mapData[row][col] = (int) type;}
+    VECTOR2D getCurrentRoom(Coords playerMapCoords) {
+        for(auto& room : rooms) {
+            if(room.roomCoords.x = playerMapCoords.x && room.roomCoords.y == playerMapCoords.y) {
+                return room.roomLayout;
+            }
+        }
+        return rooms[0].roomLayout;
+    }
+
+    void setRoom(int row, int col, MapTile type) {mapData[row][col] = (int) type;}
 
     // ------------------- UNDERLYING FUNCTIONS ------------------
 
@@ -80,12 +90,12 @@ private:
     void generateRooms() {        
         for(int i = 0; i < mapDimension; i++) {
             for(int j = 0; j < mapDimension; j++) {
-                if(mapData[i][j] == (int) RoomTileType::CENTER_ROOM || mapData[i][j] == (int) RoomTileType::NORMAL_ROOM) {
+                if(mapData[i][j] == (int) MapTile::CENTER_ROOM || mapData[i][j] == (int) MapTile::NORMAL_ROOM) {
                     Room room;
                     
                     RoomDetails r;
-                    r.coords = {j, i};
-                    r.layout = room.getRoomData();
+                    r.roomCoords = {j, i};
+                    r.roomLayout = room.getRoomData();
 
                     rooms.push_back(r);
                 }
