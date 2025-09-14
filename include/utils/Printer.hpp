@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <iostream>
+#include "Utils.hpp"
 
 enum class ConsoleColor {
     DEFAULT,
@@ -30,7 +31,7 @@ namespace {
     }
 }
 
-namespace Logger{
+namespace Printer{
     inline void printColor(const std::string& text, ConsoleColor color) {
         std::cout << getAnsiCode(color) << text << "\033[0m";
     }

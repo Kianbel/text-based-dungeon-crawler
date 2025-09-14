@@ -62,6 +62,25 @@ public:
         }
     }
 
+    void moveInRoom(Direction direction, RoomDetails& currentRoom) {
+        VECTOR2D& roomLayout = currentRoom.roomLayout;
+        Coords& playerCoords = currentRoom.playerCoords;
+        switch(direction) {
+            case Direction::NORTH:
+                if((RoomTile) roomLayout[playerCoords.y-1][playerCoords.x] == RoomTile::FLOOR) playerCoords.y -= 1;
+                break;
+            case Direction::EAST:
+                if((RoomTile) roomLayout[playerCoords.y][playerCoords.x+1] == RoomTile::FLOOR) playerCoords.x += 1;
+                break;
+            case Direction::SOUTH:
+                if((RoomTile) roomLayout[playerCoords.y+1][playerCoords.x] == RoomTile::FLOOR) playerCoords.y += 1;
+                break;
+            case Direction::WEST:
+                if((RoomTile) roomLayout[playerCoords.y][playerCoords.x-1] == RoomTile::FLOOR) playerCoords.x -= 1;
+                break;
+        }
+    }
+    
     Coords getMapPosition() {
         return mapPosition;
     }

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "../utils/Utils.hpp"
-#include "../utils/Logger.hpp"
+#include "../utils/Printer.hpp"
 #include "../utils/ProbabilityUtils.hpp"
 
 class DrunkardWalk {

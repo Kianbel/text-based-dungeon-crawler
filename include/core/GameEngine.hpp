@@ -3,7 +3,7 @@
 #include "../map/Map.hpp"
 #include "../entities/Player.hpp"
 #include "../utils/Utils.hpp"
-#include "../utils/Logger.hpp"
+#include "../utils/Printer.hpp"
 
 #include <cstdlib>
 
@@ -41,6 +41,7 @@ public:
             clearConsole();
 
             if(!hasPlayerMovedRoom) {
+
                 // PRINT MAP OR CURRENT ROOM
                 if(!isMapOpened) printCurrentRoom();
                 else {printMap(); isMapOpened = false;}
@@ -55,15 +56,6 @@ public:
 
     }
 private:
-    void initialize() {
-        map = new Map();
-        map->generateLevel(3);
-        mapData = map->getMapData();
-        mapDimension = map->getMapDimension();
-
-        player = new Player(mapData, mapDimension);
-    }
-
     void showChoiceOptions() {
         while(true) {
             std::cout <<    "======================================\n";
@@ -82,18 +74,10 @@ private:
             // if(!isMapOpened) clearConsole();
 
             switch(choice) {
-                case 'w':
-                    return;
-                    break;
-                case 's':
-                    return;
-                    break;
-                case 'a':
-                    return;
-                    break;
-                case 'd':
-                    return;
-                    break;
+                case 'w': movePlayerInRoom(Direction::NORTH); return; break;
+                case 's': movePlayerInRoom(Direction::SOUTH); return; break;
+                case 'a': movePlayerInRoom(Direction::WEST); return; break;
+                case 'd': movePlayerInRoom(Direction::EAST); return; break;
                 case 'e': // IMPLEMENT
                     std::cout << "interacted\n";
                     return;
@@ -115,60 +99,61 @@ private:
         }
     }
 
-    void movePlayerOnMap(Direction d) { // NOTE: CALL THIS WHEN PLAYER MOVES TO ANOTHER ROOM
-        player->moveOnMap(d);
-        playerMapPosition = player->getMapPosition();
-    }
-
-    // ==================== ROOM LOGIC ====================
+    // ==================== MAP AND ROOM LOGIC ====================
 
     void printCurrentRoom() {
-        VECTOR2D currentRoom = map->getCurrentRoom(playerMapPosition);
-        srand(0);
+        RoomDetails currentRoomDetails = map->getCurrentRoomDetails(playerMapPosition);
+        VECTOR2D currentRoomLayout = currentRoomDetails.roomLayout;
+        Coords playerCurrentRoomPosition = currentRoomDetails.playerCoords;
 
-        for(int i = 0; i < currentRoom.size(); i++) {
-            for(int j = 0; j < currentRoom.size(); j++) {
-                RoomTile tile = (RoomTile) currentRoom[i][j];
-                int r = rollRandomizedRange(1,100);
+        for(int i = 0; i < currentRoomLayout.size(); i++) {
+            for(int j = 0; j < currentRoomLayout.size(); j++) {
+
+                if(i == playerCurrentRoomPosition.y && j == playerCurrentRoomPosition.x) {
+                    Printer::printColor("@", ConsoleColor::YELLOW);
+                    continue;
+                }
+
+                RoomTile tile = (RoomTile) currentRoomLayout[i][j];
                 switch(tile) {
-                    case RoomTile::EMPTY:
-                        std::cout << " ";
-                        break;
-                    
-                    case RoomTile::FLOOR:
-                        if(r <= 85) {std::cout << " ";}
-                        else {
-                            r = rollRandomizedRange(1,2);
-                            if(r == 1) std::cout << ".";
-                            else std::cout << "_";
-                        }
-                        break;
-
-                    case RoomTile::WALL:
-                        std::cout << (char) 178; // ▓
-                        break;
-
-                    case RoomTile::DOOR:
-                        std::cout << "+";
-                        break;
+                    case RoomTile::EMPTY:std:: cout << " "; break;
+                    case RoomTile::FLOOR: std::cout << " "; break;
+                    case RoomTile::WALL: std::cout << (char) 178; break; // ▓
+                    case RoomTile::DOOR: std::cout << "+"; break;
                 }
             }
             std::cout << "\n";
         }
     }
 
+    void movePlayerOnMap(Direction direction) { // NOTE: CALL THIS WHEN PLAYER MOVES TO ANOTHER ROOM
+        player->moveOnMap(direction);
+        playerMapPosition = player->getMapPosition();
+    }
+
+    void movePlayerInRoom(Direction direction) {
+        RoomDetails& currentRoom = map->getCurrentRoomDetails(playerMapPosition);
+        std::cout << currentRoom.playerCoords.x << "," << currentRoom.playerCoords.y << std::endl;
+        player->moveInRoom(direction, currentRoom);
+    }
     
-
-
     // ==================== HELPER FUNCTIONS ====================
 
+    void initialize() {
+        map = new Map();
+        map->generateLevel(3);
+        mapData = map->getMapData();
+        mapDimension = map->getMapDimension();
+
+        player = new Player(mapData, mapDimension);
+    }
+
     void printMap() {
-        Logger::printMap(mapData, mapDimension, mapDimension, playerMapPosition);
+        Printer::printMap(mapData, mapDimension, mapDimension, playerMapPosition);
     }
 
     void clearConsole() {
-        for(int i = 0; i < 30; i++) {
-            std::cout << '\n';
-        }
+        std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+
     }
 };

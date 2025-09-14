@@ -7,13 +7,13 @@
 
 #include "../utils/Utils.hpp"
 #include "../utils/ProbabilityUtils.hpp"
-#include "../utils/Logger.hpp"
+#include "../utils/Printer.hpp"
 #include "DrunkardWalk.hpp"
 #include "Room.hpp"
 
 struct RoomDetails {
     Coords roomCoords;
-    Coords playerCoords;
+    Coords playerCoords = {1,1};
     VECTOR2D roomLayout;
 };
 
@@ -61,7 +61,7 @@ public:
     }
 
     void printMap() {
-        Logger::printMap(mapData, mapDimension, mapDimension);
+        Printer::printMap(mapData, mapDimension, mapDimension);
     }
 
 
@@ -73,13 +73,13 @@ public:
 
     int getRoomAmount() {return roomAmount;}
 
-    VECTOR2D getCurrentRoom(Coords playerMapCoords) {
+    RoomDetails& getCurrentRoomDetails(Coords playerMapCoords) {
         for(auto& room : rooms) {
-            if(room.roomCoords.x = playerMapCoords.x && room.roomCoords.y == playerMapCoords.y) {
-                return room.roomLayout;
+            if(room.roomCoords.x == playerMapCoords.x && room.roomCoords.y == playerMapCoords.y) {
+                return room;
             }
         }
-        return rooms[0].roomLayout;
+        return rooms[0];
     }
 
     void setRoom(int row, int col, MapTile type) {mapData[row][col] = (int) type;}
