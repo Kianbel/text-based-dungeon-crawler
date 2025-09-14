@@ -6,6 +6,9 @@
 #include "../utils/Printer.hpp"
 
 #include <cstdlib>
+#include <conio.h> // getch() to automatically read the input without needing to press the 'Enter' key
+#include <windows.h> // for no flickering when clearing the console in the clearConsole() function
+#include <string>
 
 class GameEngine {
 private:
@@ -15,6 +18,8 @@ private:
 
     Player* player;
     Coords playerMapPosition;
+
+    std::string dialogueMessage = "What would you like to do? \n";
 
     bool isRunning = true;
     bool hasPlayerMovedRoom = false;
@@ -58,20 +63,25 @@ public:
 private:
     void showChoiceOptions() {
         while(true) {
-            std::cout <<    "======================================\n";
-            std::cout <<    "[w]   Walk north\n";
-            std::cout <<    "[s]   Walk south\n";
-            std::cout <<    "[a]   Walk west\n";
-            std::cout <<    "[d]   Walk east\n";
-            std::cout <<    "[e]   Interact\n";
             std::cout <<    "\n";
-            std::cout <<    "[m]   Open map\n";
-            std::cout <<    "[1]   Open menu\n";
+            std::cout <<    "======================================\n";
+            std::cout <<    dialogueMessage;
+            std::cout <<    "======================================\n";
+            std::cout <<    "   [w]   Walk north\n";
+            std::cout <<    "   [s]   Walk south\n";
+            std::cout <<    "   [a]   Walk west\n";
+            std::cout <<    "   [d]   Walk east\n";
+            std::cout <<    "   [e]   Interact\n";
+            std::cout <<    "\n";
+            std::cout <<    "   [m]   Open map\n";
+            std::cout <<    "   [1]   Open menu\n";
+            std::cout <<    "\n";
+            std::cout <<    "   [x]   Quit\n";
 
             char choice;
-            std::cin >> choice;
+            choice = _getch();
 
-            // if(!isMapOpened) clearConsole();
+
 
             switch(choice) {
                 case 'w': movePlayerInRoom(Direction::NORTH); return; break;
@@ -82,13 +92,19 @@ private:
                     std::cout << "interacted\n";
                     return;
                     break;
-                case 'm': // IMPLEMENT
+                case 'm':
                     isMapOpened = true;
                     printMap();
                     return;
                     break;
                 case '1': // IMPLEMENT
                     std::cout << "menu opened\n";
+                    return;
+                    break;
+                case 'x':
+                    clearConsole();
+                    std::cout << "game ended";
+                    isRunning = false;
                     return;
                     break;
                 default:
@@ -106,24 +122,29 @@ private:
         VECTOR2D currentRoomLayout = currentRoomDetails.roomLayout;
         Coords playerCurrentRoomPosition = currentRoomDetails.playerCoords;
 
+        std::string printOutput;
+
         for(int i = 0; i < currentRoomLayout.size(); i++) {
             for(int j = 0; j < currentRoomLayout.size(); j++) {
 
                 if(i == playerCurrentRoomPosition.y && j == playerCurrentRoomPosition.x) {
-                    Printer::printColor("@", ConsoleColor::YELLOW);
+                    // Printer::printColor("@", ConsoleColor::YELLOW);
+                    printOutput.push_back('@');
                     continue;
                 }
 
                 RoomTile tile = (RoomTile) currentRoomLayout[i][j];
                 switch(tile) {
-                    case RoomTile::EMPTY:std:: cout << " "; break;
-                    case RoomTile::FLOOR: std::cout << " "; break;
-                    case RoomTile::WALL: std::cout << (char) 178; break; // ▓
-                    case RoomTile::DOOR: std::cout << "+"; break;
+                    case RoomTile::EMPTY: printOutput.push_back(' '); break;
+                    case RoomTile::FLOOR: printOutput.push_back(' '); break;
+                    case RoomTile::WALL: printOutput.push_back((char) 178); break; // ▓
+                    case RoomTile::DOOR: printOutput.push_back('+'); break;
                 }
             }
-            std::cout << "\n";
+            printOutput.push_back('\n');
         }
+
+        std::cout << printOutput;
     }
 
     void movePlayerOnMap(Direction direction) { // NOTE: CALL THIS WHEN PLAYER MOVES TO ANOTHER ROOM
@@ -153,7 +174,24 @@ private:
     }
 
     void clearConsole() {
-        std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+        HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+        COORD coordScreen = { 0, 0 };
+        DWORD cCharsWritten;
+        CONSOLE_SCREEN_BUFFER_INFO csbi;
+        DWORD dwConSize;
 
+        // Get buffer size
+        if (!GetConsoleScreenBufferInfo(hConsole, &csbi))
+            return;
+        dwConSize = csbi.dwSize.X * csbi.dwSize.Y;
+
+        // Fill screen with spaces
+        FillConsoleOutputCharacter(hConsole, ' ', dwConSize, coordScreen, &cCharsWritten);
+
+        // Reset attributes
+        FillConsoleOutputAttribute(hConsole, csbi.wAttributes, dwConSize, coordScreen, &cCharsWritten);
+
+        // Move cursor back to top-left
+        SetConsoleCursorPosition(hConsole, coordScreen);
     }
 };
