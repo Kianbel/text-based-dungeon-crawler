@@ -53,7 +53,7 @@ private:
 
 
     int pickRandomRoomSize() {
-        int chooseSize = rollRandomizedRange(0,0);
+        int chooseSize = rollRandomizedRange(0,2);
         switch(chooseSize) {
             case 0:
                 return (int) RoomSize::Small;
