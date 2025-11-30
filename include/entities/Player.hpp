@@ -22,6 +22,10 @@ public:
         armor = 0;
     }
 
+    void foo() {
+        std::cout << "hello world" << std::endl;
+    }
+
     void moveOnMap(Direction direction) {
         std::cout << "\nPlayer x,y: {" << mapPosition.x << "," << mapPosition.y << "}\n";
 
