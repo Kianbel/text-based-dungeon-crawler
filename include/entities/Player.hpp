@@ -1,7 +1,5 @@
 #pragma once
 
-// this is a player
-
 #include "../map/Map.hpp"
 #include "../utils/Utils.hpp"
 
@@ -20,10 +18,6 @@ public:
         this->mapPosition = {mapDimension/2 , mapDimension/2};
         health = 100;
         armor = 0;
-    }
-
-    void foo() {
-        std::cout << "hello world" << std::endl;
     }
 
     void moveOnMap(Direction direction) {
